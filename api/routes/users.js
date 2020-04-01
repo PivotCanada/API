@@ -12,6 +12,8 @@ router.post("/signup", UserController.sign_up);
 
 router.post("/login", UserController.login);
 
+router.get("/:userId", UserController.get_user);
+
 router.get("/all", authenticate, UserController.all);
 
 router.delete("/:userId", UserController.delete);
