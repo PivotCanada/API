@@ -96,11 +96,9 @@ exports.login = (req, res) => {
 // get
 
 exports.get_user = (req, res) => {
-  User.find({ _id: req.params.userId })
+  User.findOne({ _id: req.params.userId })
     .exec()
-    .then(user => {
-      res.status(200).json(user);
-    })
+    .then(user => res.status(200).json(user))
     .catch(error => {
       // TODO: Create Standardized Error Response!
       res.status(500).json(error.message);
