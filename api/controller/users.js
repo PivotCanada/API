@@ -27,8 +27,9 @@ exports.sign_up = (req, res) => {
               _id: new mongoose.Types.ObjectId(),
               email: req.body.email,
               password: hash,
-              first_name: req.body.first_name,
-              last_name: req.body.last_name
+              firstname: req.body.firstname,
+              lastname: req.body.lastname,
+              location: req.body.location
             });
             user
               .save()
@@ -81,7 +82,8 @@ exports.login = (req, res) => {
             );
             return res.status(200).json({
               message: "auth successful",
-              token: token
+              token: token,
+              user: user
             });
           }
         });
