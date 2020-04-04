@@ -10,17 +10,19 @@ const mongoose = require("mongoose");
 exports.sign_up = (req, res) => {
   User.find({ email: req.body.email })
     .exec()
-    .then(user => {
+    .then((user) => {
       if (user.length >= 1) {
-        res.status.json(422).json({
-          message: "User already exists"
+        res.status(422).json({
+          status: "fail",
+          message: "User already exists",
         });
       } else {
         bcrypt.hash(req.body.password, 10, (error, hash) => {
           if (error) {
             // TODO: Create Standardized Error Response!
             return res.status(500).json({
-              error: error
+              status: "error",
+              message: error.message,
             });
           } else {
             let user = new User({
@@ -29,24 +31,33 @@ exports.sign_up = (req, res) => {
               password: hash,
               firstname: req.body.firstname,
               lastname: req.body.lastname,
-              location: req.body.location
+              location: req.body.location,
             });
             user
               .save()
-              .then(user => {
-                res.status(201).json(user);
+              .then((user) => {
+                res.status(201).json({
+                  status: "success",
+                  data: user,
+                });
               })
-              .catch(error => {
+              .catch((error) => {
                 // TODO: Create Standardized Error Response!
-                res.status(500).json(error);
+                res.status(500).json({
+                  status: "error",
+                  message: error.message,
+                });
               });
           }
         });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       // TODO: Create Standardized Error Response!
-      res.status(500).json(error);
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
     });
 };
 
@@ -55,43 +66,53 @@ exports.sign_up = (req, res) => {
 exports.login = (req, res) => {
   User.findOne({ email: req.body.email })
     .exec()
-    .then(user => {
+    .then((user) => {
       if (!user) {
         return res.status(401).json({
-          message: "auth failed"
+          // Do not return error message as a security measure
+          status: "fail",
+          message: "Authentication failed",
         });
       } else {
         bcrypt.compare(req.body.password, user.password, (error, result) => {
           if (error) {
             // TODO : Solve err Response Issue
             return res.status(401).json({
-              message: "auth failed"
+              // Do not return error message as a security measure
+              status: "fail",
+              message: "Authentication failed",
             });
           }
           if (result) {
             const token = jwt.sign(
               {
                 email: user.email,
-                userId: user._id
+                userId: user._id,
               },
               // TODO : use process.env import
               "Istanbul",
               {
-                expiresIn: "1h"
+                expiresIn: "1h",
               }
             );
             return res.status(200).json({
-              message: "auth successful",
-              token: token,
-              user: user
+              status: "success",
+              data: {
+                token: token,
+                user: user,
+              },
             });
           }
         });
       }
     })
-    .catch(error => {
+    .catch((error) => {
       // TODO: Create Standardized Error Response!
-      res.status(500).json(error.message);
+      res.status(500).json({
+        // Do not return error message as a security measure
+        status: "fail",
+        message: "Authentication failed",
+      });
     });
 };
 
@@ -100,10 +121,18 @@ exports.login = (req, res) => {
 exports.get_user = (req, res) => {
   User.findOne({ _id: req.params.userId })
     .exec()
-    .then(user => res.status(200).json(user))
-    .catch(error => {
+    .then((user) =>
+      res.status(200).json({
+        status: "success",
+        data: user,
+      })
+    )
+    .catch((error) => {
       // TODO: Create Standardized Error Response!
-      res.status(500).json(error.message);
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
     });
 };
 
@@ -112,12 +141,18 @@ exports.get_user = (req, res) => {
 exports.all = (req, res) => {
   User.find({})
     .exec()
-    .then(users => {
-      res.status(200).json(users);
+    .then((users) => {
+      res.status(200).json({
+        status: "success",
+        data: users,
+      });
     })
-    .catch(error => {
+    .catch((error) => {
       // TODO: Create Standardized Error Response!
-      res.status(500).json(error.message);
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
     });
 };
 
@@ -126,13 +161,17 @@ exports.all = (req, res) => {
 exports.delete = (req, res) => {
   User.remove({ _id: req.params.userId })
     .exec()
-    .then(result => {
+    .then((result) => {
       res.status(200).json({
-        message: "user deleted"
+        status: "success",
+        data: null,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       // TODO: Create Standardized Error Response!
-      res.status(500).json(error.message);
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
     });
 };
