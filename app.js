@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 
 const userRoutes = require("./api/routes/users");
 const tagRoutes = require("./api/routes/tags");
+const searchRoutes = require("./api/routes/search");
 
 // Mongoose Depreciation Fixes
 
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 
 app.use("/users", userRoutes);
 app.use("/tags", tagRoutes);
+app.use("/search", searchRoutes);
 
 // Not Found
 

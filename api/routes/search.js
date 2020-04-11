@@ -2,18 +2,12 @@ const express = require("express");
 const router = express.Router();
 const authenticate = require("../middleware/authenticate");
 
-// Controller File
+// Controller Files
 
 const TagController = require("../controller/tags");
 
 // Routes
 
-router.post("/create", TagController.create);
-
-router.get("/all", TagController.all);
-
-router.get("/:tagId", TagController.get);
-
-router.delete("/:tagId", TagController.delete);
+router.get("/tags/query=:query", TagController.search);
 
 module.exports = router;
