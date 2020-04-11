@@ -12,6 +12,8 @@ router.post("/signup", UserController.sign_up);
 
 router.post("/login", UserController.login);
 
+router.post("/verify", UserController.exists);
+
 router.get("/all", UserController.all);
 
 router.get("/:userId", UserController.get_user);

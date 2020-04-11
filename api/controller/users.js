@@ -76,8 +76,8 @@ exports.login = (req, res) => {
       } else {
         bcrypt.compare(req.body.password, user.password, (error, result) => {
           if (error) {
-            // TODO : Solve err Response Issue
-            return res.status(401).json({
+            // TODO : Solve err Response Issue -> Handle Errors -> Review Technique
+            return res.status(500).json({
               // Do not return error message as a security measure
               status: "fail",
               message: "Authentication failed",
@@ -102,6 +102,12 @@ exports.login = (req, res) => {
                 user: user,
               },
             });
+          } else {
+            return res.status(500).json({
+              // Do not return error message as a security measure
+              status: "fail",
+              message: "Authentication failed",
+            });
           }
         });
       }
@@ -112,6 +118,26 @@ exports.login = (req, res) => {
         // Do not return error message as a security measure
         status: "fail",
         message: "Authentication failed",
+      });
+    });
+};
+
+// exists
+
+exports.exists = (req, res) => {
+  User.findOne({ email: req.body.email })
+    .exec()
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user === null ? false : true,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
       });
     });
 };
