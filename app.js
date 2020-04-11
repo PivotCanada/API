@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 // Route Files
 
 const userRoutes = require("./api/routes/users");
+const tagRoutes = require("./api/routes/tags");
 
 // Mongoose Depreciation Fixes
 
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
 // Routes
 
 app.use("/users", userRoutes);
+app.use("/tags", tagRoutes);
 
 // Not Found
 
@@ -63,8 +65,8 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
-      message: error.message
-    }
+      message: error.message,
+    },
   });
 });
 

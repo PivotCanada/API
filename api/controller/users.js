@@ -187,7 +187,7 @@ exports.all = (req, res) => {
 exports.delete = (req, res) => {
   User.remove({ _id: req.params.userId })
     .exec()
-    .then((result) => {
+    .then(() => {
       res.status(200).json({
         status: "success",
         data: null,
