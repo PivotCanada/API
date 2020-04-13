@@ -46,7 +46,7 @@ exports.create = (req, res) => {
 // search
 
 exports.search = (req, res) => {
-  Tag.find({ name: { $regex: req.params.query, $options: "i" } })
+  Tag.find({ name: { $regex: req.query.name, $options: "i" } })
     .exec()
     .then((tags) =>
       res.status(200).json({

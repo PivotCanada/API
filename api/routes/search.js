@@ -8,6 +8,6 @@ const TagController = require("../controller/tags");
 
 // Routes
 
-router.get("/tags/query=:query", TagController.search);
+router.get("/tags", TagController.search);
 
 module.exports = router;
