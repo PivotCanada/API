@@ -18,14 +18,17 @@ mongoose.set("useFindAndModify", false);
 
 // Connect Database
 
-mongoose.connect(
-  process.env.MONGODB_URI ||
-    "mongodb+srv://dalyanparker:" +
-      "Waverley280" +
-      // TODO: Use .ENV file for Password
-      "@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority",
-  { useNewUrlParser: true }
-);
+mongoose
+  .connect(
+    process.env.MONGODB_URI ||
+      "mongodb+srv://dalyanparker:" +
+        "Waverley280" +
+        // TODO: Use .ENV file for Password
+        "@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority",
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log("connected to mongodb.."))
+  .catch((err) => console.error("could not connect to mongodb", err));
 
 const x =
   "mongodb+srv://dalyanparker:Waverley280@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority";
