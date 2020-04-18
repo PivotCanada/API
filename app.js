@@ -53,6 +53,11 @@ app.use("/users", userRoutes);
 app.use("/tags", tagRoutes);
 app.use("/search", searchRoutes);
 
+app.use(express.static("dist"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
 // Not Found
 
 app.use((req, res, next) => {
