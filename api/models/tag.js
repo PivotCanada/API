@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
+const TagSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
 
   // Name
@@ -13,4 +13,4 @@ const userSchema = mongoose.Schema({
   updated_at: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Tag", userSchema);
+module.exports = mongoose.model("Tag", TagSchema);

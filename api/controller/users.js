@@ -5,6 +5,24 @@ const mongoose = require("mongoose");
 
 // Exports
 
+// validate
+
+exports.validate = (req, res) => {
+  // TODO : use process.env import
+  const token = req.headers.authorization.split(" ")[1];
+  try {
+    res.status(200).json({
+      status: "success",
+      data: jwt.verify(token, "Istanbul"),
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
 // signup
 
 exports.sign_up = (req, res) => {
@@ -32,6 +50,7 @@ exports.sign_up = (req, res) => {
               firstname: req.body.firstname,
               lastname: req.body.lastname,
               location: req.body.location,
+              skills: req.body.skills,
             });
             user
               .save()
@@ -122,6 +141,36 @@ exports.login = (req, res) => {
     });
 };
 
+// update
+
+exports.update = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.userId },
+    {
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      location: req.body.location,
+      skills: req.body.skills,
+    },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
 // exists
 
 exports.exists = (req, res) => {
@@ -146,7 +195,6 @@ exports.exists = (req, res) => {
 
 exports.get_user = (req, res) => {
   User.findOne({ _id: req.params.userId })
-    .exec()
     .then((user) =>
       res.status(200).json({
         status: "success",

@@ -8,11 +8,15 @@ const UserController = require("../controller/users");
 
 // Routes
 
+router.post("/validate", UserController.validate);
+
 router.post("/signup", UserController.sign_up);
 
 router.post("/login", UserController.login);
 
 router.post("/verify", UserController.exists);
+
+router.put("/:userId", UserController.update);
 
 router.get("/all", UserController.all);
 
