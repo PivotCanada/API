@@ -19,12 +19,16 @@ mongoose.set("useFindAndModify", false);
 // Connect Database
 
 mongoose.connect(
-  "mongodb+srv://dalyanparker:" +
-    "Waverley280" +
-    // TODO: Use .ENV file for Password
-    "@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority",
+  process.env.MONGODB_URI ||
+    "mongodb+srv://dalyanparker:" +
+      "Waverley280" +
+      // TODO: Use .ENV file for Password
+      "@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority",
   { useNewUrlParser: true }
 );
+
+const x =
+  "mongodb+srv://dalyanparker:Waverley280@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority";
 
 // Morgan & Body-Parser
 
@@ -32,20 +36,20 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// CORS
+CORS;
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Authorization"
-//   );
-//   if (req.method === "OPTIONS") {
-//     res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-//     return res.status(200).json({});
-//   }
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+    return res.status(200).json({});
+  }
+  next();
+});
 
 // Routes
 
