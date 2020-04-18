@@ -7,6 +7,21 @@ const mongoose = require("mongoose");
 
 // validate
 
+exports.test = (req, res) => {
+  // TODO : use process.env import
+  try {
+    res.status(200).json({
+      status: "success",
+      message: "test passed",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
 exports.validate = (req, res) => {
   // TODO : use process.env import
   const token = req.headers.authorization.split(" ")[1];
