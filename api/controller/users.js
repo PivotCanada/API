@@ -1,26 +1,18 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+
+// Config environment variables ...
+
+dotenv.config();
+
+// TODO : Add environment variables in Heroku env and local env ...
 
 // Exports
 
 // validate
-
-exports.test = (req, res) => {
-  // TODO : use process.env import
-  try {
-    res.status(200).json({
-      status: "success",
-      message: "test passed",
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "error",
-      message: error.message,
-    });
-  }
-};
 
 exports.validate = (req, res) => {
   // TODO : use process.env import

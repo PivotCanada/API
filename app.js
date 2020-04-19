@@ -1,8 +1,13 @@
 const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+
+// Config environment variables ...
+
+dotenv.config();
 
 // Route Files
 
@@ -22,16 +27,13 @@ mongoose
   .connect(
     process.env.MONGODB_URI ||
       "mongodb+srv://dalyanparker:" +
-        "Waverley280" +
+        process.env.MongoDB_Password +
         // TODO: Use .ENV file for Password
         "@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority",
     { useNewUrlParser: true }
   )
-  .then(() => console.log("connected to mongodb.."))
-  .catch((err) => console.error("could not connect to mongodb", err));
-
-const x =
-  "mongodb+srv://dalyanparker:Waverley280@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority";
+  .then(() => console.log("connection to ` MongoDB ` established ..."))
+  .catch((err) => console.error("could not connect to ` MongoDB ` ...", err));
 
 // Morgan & Body-Parser
 
@@ -56,9 +58,9 @@ app.use((req, res, next) => {
 
 // Routes
 
-app.use("/users", userRoutes);
-app.use("/tags", tagRoutes);
-app.use("/search", searchRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/tags", tagRoutes);
+app.use("/api/search", searchRoutes);
 
 // Not Found
 
