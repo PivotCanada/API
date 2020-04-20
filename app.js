@@ -28,7 +28,7 @@ mongoose
   .connect(
     process.env.MONGODB_URI ||
       "mongodb+srv://dalyanparker:" +
-        process.env.MongoDB_Password +
+        "280Waverley" +
         // TODO: Use .ENV file for Password
         "@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority",
     { useNewUrlParser: true }
