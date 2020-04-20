@@ -1,4 +1,4 @@
-const Promo = require("../models/Promo");
+const Promo = require("../models/promo");
 const mongoose = require("mongoose");
 
 // Exports
