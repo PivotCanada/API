@@ -1,13 +1,10 @@
 const express = require("express");
 const app = express();
-const dotenv = require("dotenv");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 // Config environment variables ...
-
-dotenv.config();
 
 // Route Files
 

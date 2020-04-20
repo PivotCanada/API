@@ -1,12 +1,9 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 
 // Config environment variables ...
-
-dotenv.config();
 
 // TODO : Add environment variables in Heroku env and local env ...
 
