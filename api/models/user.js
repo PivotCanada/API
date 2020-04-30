@@ -30,10 +30,12 @@ const userSchema = mongoose.Schema({
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
 
-  // Bio
+  // Bio Info
 
-  // short_description: { type: String },
-  // large_description: { type: String },
+  motivation: { type: String, default: "" },
+  commitments: { type: String, default: "" },
+  accomplishments: { type: String, default: "" },
+  bio: { type: String, default: "" },
 
   // Location
 
