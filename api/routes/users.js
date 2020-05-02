@@ -18,6 +18,14 @@ router.post("/verify", UserController.exists);
 
 router.put("/:userId", UserController.update);
 
+router.put("/follow/:userId", UserController.follow);
+
+router.put("/unfollow/:userId", UserController.unfollow);
+
+router.put("/followed/:userId", UserController.add_followed_by);
+
+router.put("/unfollowed/:userId", UserController.remove_followed_by);
+
 router.get("/all", UserController.all);
 
 router.get("/:userId", UserController.get_user);

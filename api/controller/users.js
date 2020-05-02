@@ -55,6 +55,8 @@ exports.sign_up = (req, res) => {
               lastname: req.body.lastname,
               location: req.body.location,
               skills: req.body.skills,
+              following: [],
+              followed_by: [],
             });
             user
               .save()
@@ -155,6 +157,10 @@ exports.update = (req, res) => {
       lastname: req.body.lastname,
       location: req.body.location,
       skills: req.body.skills,
+      motivation: req.body.motivation,
+      accomplishments: req.body.accomplishments,
+      bio: req.body.bio,
+      commitments: req.body.commitments,
     },
     // NOTE : Returns the 'new' updates document
     { new: true }
@@ -243,6 +249,145 @@ exports.delete = (req, res) => {
       res.status(200).json({
         status: "success",
         data: null,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+// search
+
+// TODO : clean this shit up
+// TODO : research the $in operator
+
+exports.search = (req, res) => {
+  let parmaters = {};
+
+  Object.keys(req.query).forEach((key) => {
+    if (key === "skills") {
+      let skills = req.query.skills.split(",");
+
+      console.log(skills);
+
+      parmaters["skills._id"] = {
+        $in: skills,
+      };
+    } else {
+      parmaters[key] = { $regex: req.query[key], $options: "i" };
+    }
+  });
+
+  console.log(parmaters);
+
+  User.find(parmaters)
+    .exec()
+    .then((users) =>
+      res.status(200).json({
+        status: "success",
+        data: users,
+      })
+    )
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+// Follow
+
+exports.follow = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $push: { following: req.body.user } },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+// UnFollow
+
+exports.unfollow = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $pull: { following: req.body.user } },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+// Followed By
+
+exports.add_followed_by = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $push: { followed_by: req.body.user } },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+exports.remove_followed_by = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $pull: { followed_by: req.body.user } },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user,
       });
     })
     .catch((error) => {

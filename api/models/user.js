@@ -47,6 +47,18 @@ const userSchema = mongoose.Schema({
     type: [TagSchema],
   },
 
+  // Following
+
+  following: {
+    type: [],
+  },
+
+  // Followed By
+
+  followed_by: {
+    type: [],
+  },
+
   // profession: { type: String },
 
   // Activity Logs
