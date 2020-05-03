@@ -9,6 +9,40 @@ const mongoose = require("mongoose");
 
 // Exports
 
+// upload
+
+exports.avatar = (req, res) => {
+  if (req.file) {
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      {
+        profile_image: req.file.location,
+      },
+      // NOTE : Returns the 'new' updates document
+      { new: true }
+    )
+      .exec()
+      .then((user) => {
+        res.status(200).json({
+          status: "success",
+          data: user,
+        });
+      })
+      .catch((error) => {
+        // TODO: Create Standardized Error Response!
+        res.status(500).json({
+          status: "error",
+          message: error.message,
+        });
+      });
+  } else {
+    res.status(500).json({
+      status: "error",
+      message: "No file location exists",
+    });
+  }
+};
+
 // validate
 
 exports.validate = (req, res) => {
@@ -329,8 +363,10 @@ exports.follow = (req, res) => {
 // UnFollow
 
 exports.unfollow = (req, res) => {
+  console.log(req.body.user);
   User.findOneAndUpdate(
     { _id: req.params.userId },
+
     { $pull: { following: req.body.user } },
     // NOTE : Returns the 'new' updates document
     { new: true }

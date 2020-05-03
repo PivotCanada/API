@@ -1,12 +1,44 @@
 const express = require("express");
 const router = express.Router();
 const authenticate = require("../middleware/authenticate");
+const aws = require("aws-sdk");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
 
 // Controller File
 
 const UserController = require("../controller/users");
 
 // Routes
+
+///
+
+const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
+
+const s3 = new aws.S3({
+  endpoint: spacesEndpoint,
+  accessKeyId: "OU6BQAIJPHJFF4GB5S5N",
+  secretAccessKey: "4ygG6TIhSoYLf2ZjaulIufgraVidSd0mDCwQJBn8QH4",
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: "pivot",
+    acl: "public-read",
+    key: function (req, file, cb) {
+      console.log("hey");
+      console.log(file);
+      cb(null, file.originalname);
+    },
+  }),
+}).single("upload");
+
+// Profile Image
+
+router.put("/avatar/:userId", upload, UserController.avatar);
+
+///
 
 router.post("/validate", UserController.validate);
 

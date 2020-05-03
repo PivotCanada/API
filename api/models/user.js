@@ -43,6 +43,13 @@ const userSchema = mongoose.Schema({
 
   // Profession & Skills
 
+  profile_image: {
+    type: String,
+    default: "",
+  },
+
+  // Profession & Skills
+
   skills: {
     type: [TagSchema],
   },
