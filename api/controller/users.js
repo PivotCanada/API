@@ -11,6 +11,8 @@ const mongoose = require("mongoose");
 
 // upload
 
+// TODO Fix this
+
 exports.avatar = (req, res) => {
   if (req.file) {
     User.findOneAndUpdate(
