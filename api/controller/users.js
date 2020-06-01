@@ -89,10 +89,16 @@ exports.sign_up = (req, res) => {
               password: hash,
               firstname: req.body.firstname,
               lastname: req.body.lastname,
+              business: req.body.business,
+              industry: req.body.industry,
               location: req.body.location,
-              skills: req.body.skills,
-              following: [],
-              followed_by: [],
+              years: req.body.years,
+              hasSite: req.body.hasSite,
+              website: req.body.website,
+              achievements: req.body.achievements,
+              goals: req.body.goals,
+              challenges: req.body.challenges,
+              wish: req.body.wish,
             });
             user
               .save()

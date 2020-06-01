@@ -23,6 +23,7 @@ const userSchema = mongoose.Schema({
     unique: true,
     match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
   },
+
   password: { type: String, required: true },
 
   // Name
@@ -32,39 +33,50 @@ const userSchema = mongoose.Schema({
 
   // Bio Info
 
-  motivation: { type: String, default: "" },
-  commitments: { type: String, default: "" },
-  accomplishments: { type: String, default: "" },
-  bio: { type: String, default: "" },
+  achievements: { type: String, default: "" },
+  wish: { type: String, default: "" },
+  challenges: { type: String, default: "" },
+  goals: { type: String, default: "" },
+  business: { type: String },
+  years: { type: String },
+  hasSite: { type: Boolean },
 
   // Location
 
   location: { type: String },
 
+  // Website
+
+  website: { type: String },
+
+  // Industry
+
+  industry: { type: String },
+
   // Profession & Skills
 
-  profile_image: {
-    type: String,
-    default: "",
-  },
+  // profile_image: {
+  //   type: String,
+  //   default: "",
+  // },
 
   // Profession & Skills
 
-  skills: {
-    type: [TagSchema],
-  },
+  // skills: {
+  //   type: [TagSchema],
+  // },
 
   // Following
 
-  following: {
-    type: [],
-  },
+  // following: {
+  //   type: [],
+  // },
 
   // Followed By
 
-  followed_by: {
-    type: [],
-  },
+  // followed_by: {
+  //   type: [],
+  // },
 
   // profession: { type: String },
 
