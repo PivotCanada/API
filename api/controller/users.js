@@ -197,12 +197,16 @@ exports.update = (req, res) => {
     {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
+      business: req.body.business,
+      industry: req.body.industry,
       location: req.body.location,
-      skills: req.body.skills,
-      motivation: req.body.motivation,
-      accomplishments: req.body.accomplishments,
-      bio: req.body.bio,
-      commitments: req.body.commitments,
+      years: req.body.years,
+      hasSite: req.body.hasSite,
+      website: req.body.website,
+      achievements: req.body.achievements,
+      goals: req.body.goals,
+      challenges: req.body.challenges,
+      wish: req.body.wish,
     },
     // NOTE : Returns the 'new' updates document
     { new: true }

@@ -23,16 +23,9 @@ const userSchema = mongoose.Schema({
     unique: true,
     match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
   },
-
   password: { type: String, required: true },
-
-  // Name
-
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-
-  // Bio Info
-
   achievements: { type: String, default: "" },
   wish: { type: String, default: "" },
   challenges: { type: String, default: "" },
@@ -40,17 +33,8 @@ const userSchema = mongoose.Schema({
   business: { type: String },
   years: { type: String },
   hasSite: { type: Boolean },
-
-  // Location
-
   location: { type: String },
-
-  // Website
-
   website: { type: String },
-
-  // Industry
-
   industry: { type: String },
 
   // Profession & Skills
