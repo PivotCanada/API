@@ -52,15 +52,15 @@ const userSchema = mongoose.Schema({
 
   // Following
 
-  // following: {
-  //   type: [],
-  // },
+  following: {
+    type: [],
+  },
 
   // Followed By
 
-  // followed_by: {
-  //   type: [],
-  // },
+  followed_by: {
+    type: [],
+  },
 
   // profession: { type: String },
 
