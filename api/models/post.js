@@ -22,7 +22,7 @@ const PostSchema = mongoose.Schema({
   // Posts
 
   tags: {
-    type: [String],
+    type: [],
   },
 
   // Activity Logs
