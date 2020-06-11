@@ -9,7 +9,7 @@ exports.create = (req, res) => {
     text: req.body.text,
     link: req.body.link,
     author: req.body.author,
-    likes: [],
+    likes: req.body.likes,
     tags: req.body.tags,
   });
   post
