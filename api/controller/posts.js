@@ -8,7 +8,7 @@ exports.create = (req, res) => {
     _id: new mongoose.Types.ObjectId(),
     text: req.body.text,
     link: req.body.link,
-    created_by: req.body.created_by,
+    author: req.body.author,
     likes: req.body.likes,
     tags: req.body.tags,
   });
@@ -37,7 +37,7 @@ exports.update = (req, res) => {
     {
       text: req.body.text,
       link: req.body.link,
-      created_by: req.body.created_by,
+      author: req.body.author,
       likes: req.body.likes,
       tags: req.body.tags,
     },

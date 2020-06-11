@@ -13,7 +13,7 @@ const PostSchema = mongoose.Schema({
 
   // Created By
 
-  created_by: { type: String, default: "" },
+  author: { type: Object, default: {} },
 
   // Likes
 
