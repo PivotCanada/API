@@ -120,6 +120,26 @@ exports.all = (req, res) => {
     });
 };
 
+// get all by user ._id
+
+exports.userAll = (req, res) => {
+  Post.find({ "author._id": req.params.userId })
+    .exec()
+    .then((posts) => {
+      res.status(200).json({
+        status: "success",
+        data: posts,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
 // delete
 
 exports.delete = (req, res) => {
