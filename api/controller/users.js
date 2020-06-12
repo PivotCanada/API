@@ -446,3 +446,53 @@ exports.remove_followed_by = (req, res) => {
       });
     });
 };
+
+// Like
+
+exports.like = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $push: { likes: req.body.post } },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+// Remove Like
+
+exports.unlike = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $pull: { likes: req.body.post } },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then((user) => {
+      res.status(200).json({
+        status: "success",
+        data: user,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};

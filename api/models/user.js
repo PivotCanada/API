@@ -36,6 +36,7 @@ const userSchema = mongoose.Schema({
   location: { type: String },
   website: { type: String },
   industry: { type: String },
+  photo: { type: String },
 
   // Profession & Skills
 
@@ -59,6 +60,12 @@ const userSchema = mongoose.Schema({
   // Followed By
 
   followed_by: {
+    type: [],
+  },
+
+  // Likes
+
+  likes: {
     type: [],
   },
 

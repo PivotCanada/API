@@ -58,6 +58,10 @@ router.put("/followed/:userId", UserController.add_followed_by);
 
 router.put("/unfollowed/:userId", UserController.remove_followed_by);
 
+router.put("/like/:userId", UserController.like);
+
+router.put("/unlike/:userId", UserController.unlike);
+
 router.get("/all", UserController.all);
 
 router.get("/:userId", UserController.get_user);
