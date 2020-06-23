@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const mongoose = require("mongoose");
+const setData = require("../utils/setData");
 
 // Exports
 
@@ -31,16 +32,17 @@ exports.create = (req, res) => {
 
 // Update
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   Post.findOneAndUpdate(
     { _id: req.params.postId },
-    {
-      text: req.body.text,
-      link: req.body.link,
-      author: req.body.author,
-      likes: req.body.likes,
-      tags: req.body.tags,
-    },
+    await setData(req),
+    // {
+    //   text: req.body.text,
+    //   link: req.body.link,
+    //   author: req.body.author,
+    //   likes: req.body.likes,
+    //   tags: req.body.tags,
+    // },
     // NOTE : Returns the 'new' updates document
     { new: true }
   )
@@ -144,6 +146,64 @@ exports.userAll = (req, res) => {
 
 exports.delete = (req, res) => {
   Post.remove({ _id: req.params.postId })
+    .exec()
+    .then(() => {
+      res.status(200).json({
+        status: "success",
+        data: null,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+// add Like
+
+exports.like = (req, res) => {
+  Post.findOneAndUpdate(
+    { _id: req.params.postId },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $addToSet: { likes: req.body.user_id },
+    },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then(() => {
+      res.status(200).json({
+        status: "success",
+        data: null,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+exports.unlike = (req, res) => {
+  Post.findOneAndUpdate(
+    { _id: req.params.postId },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $pullAll: { likes: [req.body.user_id] },
+    },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
     .exec()
     .then(() => {
       res.status(200).json({

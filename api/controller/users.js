@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const setData = require("../utils/setData");
 
 // Config environment variables ...
 
@@ -191,23 +192,10 @@ exports.login = (req, res) => {
 
 // update
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   User.findOneAndUpdate(
     { _id: req.params.userId },
-    {
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      business: req.body.business,
-      industry: req.body.industry,
-      location: req.body.location,
-      years: req.body.years,
-      hasSite: req.body.hasSite,
-      website: req.body.website,
-      achievements: req.body.achievements,
-      goals: req.body.goals,
-      challenges: req.body.challenges,
-      wish: req.body.wish,
-    },
+    await setData(req),
     // NOTE : Returns the 'new' updates document
     { new: true }
   )
@@ -447,20 +435,23 @@ exports.remove_followed_by = (req, res) => {
     });
 };
 
-// Like
-
 exports.like = (req, res) => {
   User.findOneAndUpdate(
     { _id: req.params.userId },
-    { $push: { likes: req.body.post } },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $addToSet: { likes: req.body.post_id },
+    },
     // NOTE : Returns the 'new' updates document
     { new: true }
   )
     .exec()
-    .then((user) => {
+    .then(() => {
       res.status(200).json({
         status: "success",
-        data: user,
+        data: null,
       });
     })
     .catch((error) => {
@@ -472,20 +463,23 @@ exports.like = (req, res) => {
     });
 };
 
-// Remove Like
-
 exports.unlike = (req, res) => {
   User.findOneAndUpdate(
     { _id: req.params.userId },
-    { $pull: { likes: req.body.post } },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $pullAll: { likes: [req.body.post_id] },
+    },
     // NOTE : Returns the 'new' updates document
     { new: true }
   )
     .exec()
-    .then((user) => {
+    .then(() => {
       res.status(200).json({
         status: "success",
-        data: user,
+        data: null,
       });
     })
     .catch((error) => {
