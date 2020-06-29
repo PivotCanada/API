@@ -340,7 +340,12 @@ exports.search = (req, res) => {
 exports.follow = (req, res) => {
   User.findOneAndUpdate(
     { _id: req.params.userId },
-    { $push: { following: req.body.user } },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $addToSet: { following: req.body.id },
+    },
     // NOTE : Returns the 'new' updates document
     { new: true }
   )
@@ -367,7 +372,12 @@ exports.unfollow = (req, res) => {
   User.findOneAndUpdate(
     { _id: req.params.userId },
 
-    { $pull: { following: req.body.user } },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $pullAll: { following: [req.body.id] },
+    },
     // NOTE : Returns the 'new' updates document
     { new: true }
   )
@@ -392,7 +402,12 @@ exports.unfollow = (req, res) => {
 exports.add_followed_by = (req, res) => {
   User.findOneAndUpdate(
     { _id: req.params.userId },
-    { $push: { followed_by: req.body.user } },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $addToSet: { followed_by: req.body.id },
+    },
     // NOTE : Returns the 'new' updates document
     { new: true }
   )
@@ -415,7 +430,12 @@ exports.add_followed_by = (req, res) => {
 exports.remove_followed_by = (req, res) => {
   User.findOneAndUpdate(
     { _id: req.params.userId },
-    { $pull: { followed_by: req.body.user } },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $pullAll: { followed_by: [req.body.id] },
+    },
     // NOTE : Returns the 'new' updates document
     { new: true }
   )
