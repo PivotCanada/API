@@ -91,6 +91,7 @@ exports.sign_up = (req, res) => {
               firstname: req.body.firstname,
               lastname: req.body.lastname,
               business: req.body.business,
+              motivation: req.body.motivation,
               industry: req.body.industry,
               location: req.body.location,
               years: req.body.years,

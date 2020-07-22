@@ -30,6 +30,7 @@ const userSchema = mongoose.Schema({
   wish: { type: String, default: "" },
   challenges: { type: String, default: "" },
   goals: { type: String, default: "" },
+  motivation: { type: String, default: "" },
   business: { type: String },
   years: { type: String },
   hasSite: { type: Boolean },
