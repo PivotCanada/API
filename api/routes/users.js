@@ -5,6 +5,8 @@ const aws = require("aws-sdk");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 
+const fs = require("fs"); // Needed for example below
+
 // Controller File
 
 const UserController = require("../controller/users");
@@ -21,14 +23,27 @@ const s3 = new aws.S3({
   secretAccessKey: "4ygG6TIhSoYLf2ZjaulIufgraVidSd0mDCwQJBn8QH4",
 });
 
+const tryUpload = () => {
+  console.log(req.file);
+
+  var params = {
+    Bucket: "pivot",
+    Key: "file.jpg",
+    Body: file,
+    ACL: "public-read",
+  };
+  s3.putObject(params, function (err, data) {
+    if (err) console.log(err, err.stack);
+    else console.log(data);
+  });
+};
+
 const upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: "pivot",
     acl: "public-read",
     key: function (req, file, cb) {
-      console.log("hey");
-      console.log(file);
       cb(null, file.originalname);
     },
   }),

@@ -19,7 +19,7 @@ exports.avatar = (req, res) => {
     User.findOneAndUpdate(
       { _id: req.params.userId },
       {
-        profile_image: req.file.location,
+        photo: req.file.location,
       },
       // NOTE : Returns the 'new' updates document
       { new: true }
@@ -100,8 +100,7 @@ exports.sign_up = (req, res) => {
               goals: req.body.goals,
               challenges: req.body.challenges,
               wish: req.body.wish,
-              photo:
-                "https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=581&q=80",
+              photo: req.body.photo,
             });
             user
               .save()
