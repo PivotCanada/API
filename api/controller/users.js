@@ -101,7 +101,8 @@ exports.sign_up = (req, res) => {
               goals: req.body.goals,
               challenges: req.body.challenges,
               wish: req.body.wish,
-              photo: req.body.photo,
+              photo:
+                "https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
             });
             user
               .save()
