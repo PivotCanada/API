@@ -12,6 +12,9 @@ exports.create = (req, res) => {
     author: req.body.author,
     likes: req.body.likes,
     tags: req.body.tags,
+    role: req.body.role,
+    context: req.body.context,
+    children: req.body.children,
   });
   post
     .save()

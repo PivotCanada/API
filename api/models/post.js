@@ -27,6 +27,10 @@ const PostSchema = mongoose.Schema({
     type: [],
   },
 
+  role: { type: String, default: "" },
+  context: { type: String, default: "" },
+  children: { type: [] },
+
   // Activity Logs
 
   created_at: { type: Date, default: Date.now },
