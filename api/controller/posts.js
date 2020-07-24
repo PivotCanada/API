@@ -222,3 +222,63 @@ exports.unlike = (req, res) => {
       });
     });
 };
+
+// add Child
+
+exports.add_child = (req, res) => {
+  Post.findOneAndUpdate(
+    { _id: req.params.postId },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $addToSet: { children: req.body.child },
+    },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then(() => {
+      res.status(200).json({
+        status: "success",
+        data: null,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+// remove Child
+
+exports.remove_child = (req, res) => {
+  Post.findOneAndUpdate(
+    { _id: req.params.postId },
+    {
+      $set: {
+        updated_at: Date.now(),
+      },
+      $pullAll: { likes: [req.body.user_id] },
+    },
+    // NOTE : Returns the 'new' updates document
+    { new: true }
+  )
+    .exec()
+    .then(() => {
+      res.status(200).json({
+        status: "success",
+        data: null,
+      });
+    })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};

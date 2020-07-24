@@ -16,6 +16,8 @@ router.put("/like/:postId", PostController.like);
 
 router.put("/unlike/:postId", PostController.unlike);
 
+router.put("/add_child/:postId", PostController.add_child);
+
 router.get("/all", PostController.all);
 
 router.get("/:postId", PostController.get);
