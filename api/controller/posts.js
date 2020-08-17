@@ -67,23 +67,23 @@ exports.update = async (req, res) => {
 
 // search
 
-exports.search = (req, res) => {
-  Tag.find({ name: { $regex: req.query.name, $options: "i" } })
-    .exec()
-    .then((tags) =>
-      res.status(200).json({
-        status: "success",
-        data: tags,
-      })
-    )
-    .catch((error) => {
-      // TODO: Create Standardized Error Response!
-      res.status(500).json({
-        status: "error",
-        message: error.message,
-      });
-    });
-};
+// exports.search = (req, res) => {
+//   Tag.find({ name: { $regex: req.query.name, $options: "i" } })
+//     .exec()
+//     .then((tags) =>
+//       res.status(200).json({
+//         status: "success",
+//         data: tags,
+//       })
+//     )
+//     .catch((error) => {
+//       // TODO: Create Standardized Error Response!
+//       res.status(500).json({
+//         status: "error",
+//         message: error.message,
+//       });
+//     });
+// };
 
 // get
 
@@ -274,6 +274,40 @@ exports.remove_child = (req, res) => {
         data: null,
       });
     })
+    .catch((error) => {
+      // TODO: Create Standardized Error Response!
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    });
+};
+
+// Search
+
+exports.search = (req, res) => {
+  let parmaters = {};
+
+  Object.keys(req.query).forEach((key) => {
+    if (key === "tags") {
+      let tags = req.query.tags.split(",");
+
+      parmaters["tags.name"] = {
+        $in: tags,
+      };
+    } else {
+      parmaters[key] = { $regex: req.query[key], $options: "i" };
+    }
+  });
+
+  Post.find(parmaters)
+    .exec()
+    .then((posts) =>
+      res.status(200).json({
+        status: "success",
+        data: posts,
+      })
+    )
     .catch((error) => {
       // TODO: Create Standardized Error Response!
       res.status(500).json({
