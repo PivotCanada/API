@@ -302,17 +302,63 @@ exports.delete = (req, res) => {
 // TODO : clean this shit up
 // TODO : research the $in operator
 
+// exports.search = (req, res) => {
+//   let parmaters = {};
+
+//   Object.keys(req.query).forEach((key) => {
+//     if (key === "skills") {
+//       let skills = req.query.skills.split(",");
+
+//       console.log(skills);
+
+//       parmaters["skills._id"] = {
+//         $in: skills,
+//       };
+//     } else {
+//       parmaters[key] = { $regex: req.query[key], $options: "i" };
+//     }
+//   });
+
+//   console.log(parmaters);
+
+//   User.find(parmaters)
+//     .exec()
+//     .then((users) =>
+//       res.status(200).json({
+//         status: "success",
+//         data: users,
+//       })
+//     )
+//     .catch((error) => {
+//       // TODO: Create Standardized Error Response!
+//       res.status(500).json({
+//         status: "error",
+//         message: error.message,
+//       });
+//     });
+// };
+
 exports.search = (req, res) => {
   let parmaters = {};
 
   Object.keys(req.query).forEach((key) => {
-    if (key === "skills") {
-      let skills = req.query.skills.split(",");
+    if (key === "tags") {
+      let tags = req.query.tags.split(",");
 
-      console.log(skills);
+      // parmaters["location"] = {
+      //   $in: tags[0],
+      // };
+      // parmaters["role"] = {
+      //   $in: tags,
+      // };
+      // parmaters["industry"] = { $in: tags };
 
-      parmaters["skills._id"] = {
-        $in: skills,
+      parmaters = {
+        $or: [
+          { location: { $in: tags } },
+          { industry: { $in: tags } },
+          { role: { $in: tags } },
+        ],
       };
     } else {
       parmaters[key] = { $regex: req.query[key], $options: "i" };

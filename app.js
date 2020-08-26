@@ -12,7 +12,6 @@ const userRoutes = require("./api/routes/users");
 const tagRoutes = require("./api/routes/tags");
 const postRoutes = require("./api/routes/posts");
 const searchRoutes = require("./api/routes/search");
-const promoRoutes = require("./api/routes/promo");
 
 // Mongoose Depreciation Fixes
 
@@ -61,7 +60,6 @@ app.use("/api/users", userRoutes);
 app.use("/api/tags", tagRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/search", searchRoutes);
-app.use("/api/promo", promoRoutes);
 
 // Not Found
 

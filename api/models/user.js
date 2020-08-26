@@ -38,6 +38,7 @@ const userSchema = mongoose.Schema({
   website: { type: String },
   industry: { type: String },
   photo: { type: String },
+  role: { type: String },
 
   // Profession & Skills
 

@@ -300,6 +300,8 @@ exports.search = (req, res) => {
     }
   });
 
+  console.log(parmaters);
+
   Post.find(parmaters)
     .exec()
     .then((posts) =>
