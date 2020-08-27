@@ -10,9 +10,11 @@ const TagController = require("../controller/tags");
 
 router.post("/create", TagController.create);
 
-router.get("/all", TagController.all);
+// router.get("/all", TagController.all);
 
-router.get("/:tagId", TagController.get);
+router.get("/reset", TagController.reset);
+
+// router.get("/:tagId", TagController.get);
 
 router.delete("/:tagId", TagController.delete);
 

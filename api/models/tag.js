@@ -7,6 +7,10 @@ const TagSchema = mongoose.Schema({
 
   name: { type: String, required: true },
 
+  // Type
+
+  type: { type: String, required: true, default: "general" },
+
   // Activity Logs
 
   created_at: { type: Date, default: Date.now },
