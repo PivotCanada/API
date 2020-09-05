@@ -24,8 +24,8 @@ mongoose.set("useFindAndModify", false);
 mongoose
   .connect(
     process.env.MONGODB_URI ||
-      "mongodb+srv://dalyanparker:" +
-        "280Waverley" +
+      "mongodb+srv://new account name here:" +
+        "new password here" +
         // TODO: Use .ENV file for Password
         "@cluster0-ikejh.mongodb.net/test?retryWrites=true&w=majority",
     { useNewUrlParser: true }
